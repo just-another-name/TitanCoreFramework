@@ -1,0 +1,139 @@
+# Основные зависимости
+
+# Alembic - инструмент для миграций базы данных в SQLAlchemy
+alembic==1.13.1
+
+# FastAPI - современный, быстрый веб-фреймворк для построения API
+fastapi==0.109.1
+
+# Uvicorn - ASGI-сервер для запуска FastAPI приложений
+uvicorn==0.27.0
+
+# python-dotenv - загрузка переменных окружения из .env файлов
+python-dotenv==1.0.0
+
+# Pydantic - библиотека для валидации данных и работы с моделями
+pydantic==2.6.1
+
+# Pydantic Settings - расширение Pydantic для работы с настройками приложения
+pydantic-settings==2.2.1
+
+
+# Базы данных и ORM (MariaDB/MySQL)
+
+# SQLAlchemy - мощный ORM и инструментарий для работы с базами данных
+sqlalchemy==2.0.25
+
+# Tortoise-ORM - асинхронный ORM для Python
+tortoise-orm==0.24.0  # Обновлено для совместимости с aerich
+
+# Aerich - инструмент для миграций в Tortoise-ORM (аналог Alembic для SQLAlchemy)
+aerich==0.9.1
+
+# PyMySQL - MySQL клиент для Python
+pymysql==1.1.0
+
+# Asyncmy - асинхронный MySQL клиент для Python
+asyncmy==0.2.8
+
+# aiosqlite - асинхронный интерфейс для SQLite (используется Tortoise-ORM)
+aiosqlite==0.17.0  # Совместимая версия для tortoise-orm 0.24.0
+
+
+# Аутентификация и безопасность
+
+# Passlib - библиотека для хеширования паролей (с поддержкой bcrypt)
+passlib[bcrypt]==1.7.4
+
+# python-jose - реализация JWT (JSON Web Tokens) для Python
+python-jose[cryptography]==3.3.0
+
+# bcrypt - алгоритм хеширования паролей
+bcrypt==4.1.2
+
+# PyJWT - альтернативная реализация JWT
+pyjwt==2.8.0
+
+
+# Кэширование
+
+# redis - клиент Redis для синхронного Python
+redis==5.0.1
+
+# aioredis - асинхронный клиент Redis (для использования с asyncio)
+aioredis==2.0.1
+
+
+# Фоновые задачи
+
+# Celery - распределенная очередь задач
+celery==5.3.6
+
+# Flower - веб-интерфейс для мониторинга Celery
+flower==2.0.1
+
+
+# Шаблонизация
+
+# Jinja2 - движок шаблонов для Python
+jinja2==3.1.2
+
+# aiohttp-jinja2 - интеграция Jinja2 с aiohttp (для рендеринга шаблонов в асинхронных приложениях)
+aiohttp-jinja2==1.5.1
+
+
+# Валидация
+
+# email-validator - библиотека для проверки email-адресов
+email-validator==2.0.0.post2
+
+
+# Логирование
+
+# loguru - современная библиотека для логирования с простым API
+loguru==0.7.2
+
+
+# Тестирование
+
+# pytest - фреймворк для написания тестов
+pytest==7.4.4
+
+# pytest-asyncio - поддержка asyncio в pytest
+pytest-asyncio==0.23.5
+
+# httpx - HTTP клиент для тестирования (асинхронный аналог requests)
+httpx==0.26.0
+
+# factory-boy - библиотека для создания тестовых данных
+factory-boy==3.3.0
+
+
+# Документация
+
+# mkdocs - генератор статической документации
+mkdocs==1.5.3
+
+# mkdocs-material - тема Material Design для MkDocs
+mkdocs-material==9.5.3
+
+
+# Разработка
+
+# black - автоформатировщик кода
+black==23.12.1
+
+# isort - утилита для сортировки импортов
+isort==5.13.2
+
+# mypy - статический анализатор типов для Python
+mypy==1.8.0
+
+# pylint - линтер для анализа кода
+pylint==3.0.3
+
+# python-multipart - библиотека для обработки multipart/form-data (используется FastAPI для загрузки файлов)
+python-multipart==0.0.20
+
+# itsdangerous - библиотека для создания криптографически подписанных данных (используется в сессиях, токенах)
+itsdangerous==2.2.0
