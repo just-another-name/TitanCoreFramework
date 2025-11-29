@@ -1,5 +1,6 @@
 # TitanCoreFramework
 TitanCoreFramework: A FastAPI-based Python backend with layered architecture (Controllers/Views/Models). Features auth, CLI, DB abstraction, queues. Supports Node.js/React frontend. Perfect for robust REST APIs and web apps.
+!!! Before using in production, you must fix security and architecture problems. I don't have time for that yet.
 
 CLI Commands
 Database Migrations
