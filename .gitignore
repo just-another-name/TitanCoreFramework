@@ -44,7 +44,7 @@ Thumbs.db
 
 # Logs
 *.log
-storage/logs/*.log
+!storage/logs/*.log
 !storage/logs/.gitkeep
 
 # Packages
