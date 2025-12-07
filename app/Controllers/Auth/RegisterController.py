@@ -36,6 +36,12 @@ class RegisterController():
             email = request_data.get("email")
             password = request_data.get("password")
 
+            if not CsrfService.validate_token(request, csrf_token):
+                return JSONResponse(
+                    {"error": "Некорректный CSRF-токен", "csrf": CsrfService.set_token_to_session(request)},
+                    status_code=400
+                )
+
             if not name:
                 return JSONResponse(
                     {"error": "Пожалуйста, введите имя", "csrf": CsrfService.set_token_to_session(request)},
@@ -110,7 +116,7 @@ class RegisterController():
             db.commit()
             
             return JSONResponse(
-                {"result": 1},
+                {"result": 1, "csrf": CsrfService.set_token_to_session(request)},
                 status_code=200
             )  
 

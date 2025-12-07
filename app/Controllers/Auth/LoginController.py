@@ -37,6 +37,12 @@ class LoginController:
             email = request_data.get("login")
             password = request_data.get("password")
 
+            if not CsrfService.validate_token(request, csrf_token):
+                return JSONResponse(
+                    {"error": "Некорректный CSRF-токен", "csrf": CsrfService.set_token_to_session(request)},
+                    status_code=400
+                )            
+
             if not email:
                 return JSONResponse(
                     {"error": "Пожалуйста, введите email", "csrf": CsrfService.set_token_to_session(request)},
@@ -78,14 +84,20 @@ class LoginController:
                 email=email,
             ).first()
 
-            user_verify = AuthService.verify_password(password, user.password)
-            
             if not user:
                 return JSONResponse(
-                    {"error": "Неверный логин или пароль", "csrf": CsrfService.set_token_to_session(request)},
+                    {"error": "Неверный логин", "csrf": CsrfService.set_token_to_session(request)},
                     status_code=401
                 )
 
+            user_verify = AuthService.verify_password(password, user.password)
+            
+            if not user_verify:
+                return JSONResponse(
+                    {"error": "Неверный пароль", "csrf": CsrfService.set_token_to_session(request)},
+                    status_code=401
+                )
+            
             request.session["user_id"] = user.id
             request.session["user_name"] = user.name
             request.session["user_email"] = user.email
