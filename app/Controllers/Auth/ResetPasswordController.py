@@ -11,6 +11,7 @@ from app.Services.RequestParser import RequestParser
 from email_validator import validate_email, EmailNotValidError
 from app.Services.CsrfService import CsrfService
 from app.Services.EmailService import EmailService
+from app.Services.AuthService import AuthService
 import hashlib
 import re
 from datetime import datetime
@@ -20,8 +21,6 @@ class ResetPasswordController():
     @classmethod
     async def resetPassword(cls, request: Request, token: str, db: Session = Depends(get_db)):
         try:
-            print(f"Token from URL: {token}")
-            
             if not token:
                 raise HTTPException(status_code=302, headers={"Location": "https://ya.ru/"})
 
@@ -30,12 +29,9 @@ class ResetPasswordController():
             ).first()
 
             if not reset_token:
-                print("Токен не найден в базе данных")
                 raise HTTPException(status_code=302, headers={"Location": "https://ya.ru/"})
                     
-            # Используйте метод is_expired() (со скобками!)
             if reset_token.is_expired():
-                print("Токен просрочен")
                 raise HTTPException(status_code=302, headers={"Location": "https://ya.ru/"})
 
             csrf_token = CsrfService.set_token_to_session(request)
@@ -44,7 +40,6 @@ class ResetPasswordController():
                 "csrf_token": csrf_token
             })
         except Exception as e:
-            print(f"Ошибка в resetPassword: {e}")
             raise HTTPException(status_code=302, headers={"Location": "https://ya.ru/"})
     
     @staticmethod
@@ -55,6 +50,12 @@ class ResetPasswordController():
             csrf_token = request_data.get("csrf_token")
             email = request_data.get("email")
             password = request_data.get("password")
+            
+            if not CsrfService.validate_token(request, csrf_token):
+                return JSONResponse(
+                    {"error": "Некорректный CSRF-токен", "csrf": CsrfService.set_token_to_session(request)},
+                    status_code=400
+                )  
 
             if not email:
                 return JSONResponse(
@@ -99,15 +100,8 @@ class ResetPasswordController():
                     {"error": "Не удалось найти пользователя с указанным E-mail.", "csrf": CsrfService.set_token_to_session(request)},
                     status_code=401
                 )
-            # Проверяем историю паролей
-            combined = f"{email}{password}"
-            sha1_hash = hashlib.sha1(combined.encode('utf-8')).hexdigest()
-            password_hash = hashlib.md5(sha1_hash.encode('utf-8')).hexdigest()
+            password_hash = AuthService.get_password_hash(password)
             
-            # Импортируем модель истории паролей
-            
-            
-            # Проверяем, использовался ли такой пароль ранее
             old_password = db.query(UsersPasswordHistory).filter(
                 UsersPasswordHistory.user_id == user.id,
                 UsersPasswordHistory.password == password_hash

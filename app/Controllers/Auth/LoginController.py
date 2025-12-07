@@ -7,7 +7,6 @@ from config.templates import templates
 from app.Models.User import User
 from sqlalchemy.orm import Session
 from config.database import get_db
-import hashlib
 from typing import AsyncGenerator
 from app.Services.RequestParser import RequestParser
 from email_validator import validate_email, EmailNotValidError

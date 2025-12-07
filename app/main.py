@@ -20,7 +20,7 @@ logging.config.dictConfig(LOGGING)
 
 app.add_middleware(
     SessionMiddleware,
-    secret_key=os.getenv("SESSION_SECRET_KEY", "fallback-dev-key-only-for-dev"), 
+    secret_key = os.getenv("SESSION_SECRET_KEY"),
     session_cookie="session",      
     max_age=60 * 60 * 24 * 7   
 )

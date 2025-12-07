@@ -2,30 +2,29 @@
 from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
-    # Основные настройки
-    appBaseName: str = "FastAPI Laravel Clone"
+    app_base_name: str = "TitanCore"
     debug: bool = False
     environment: str = "production"
     timezone: str = "UTC"
     
-    appBaseUrl: str = "http://localhost:8000"
-    mailMailer: str = "smtp"
-    mailFromName: str = "TitanCore Framework"
+    app_base_url: str = "http://localhost:8000"
+    mail_mailer: str = "smtp"
+    mail_from_name: str = "TitanCore Framework"
 
     # Настройки БД
-    databaseUser: str = "root"
-    databasePassword: str = ""
-    databaseHost: str = "localhost"
-    databasePort: int = 3306
-    databaseName: str = "test_db"
+    database_user: str = "root"
+    database_password: str = ""
+    database_host: str = "localhost"
+    database_port: int = 3306
+    database_name: str = "test_db"
 
     # Настройки почты
-    mailHost: str = "smtp.mail.ru"
-    mailPort: int = 465
-    mailUsername: str = ""
-    mailPassword: str = ""
-    mailEncryption: str = ""
-    mailFromAddress: str = ""
+    mail_host: str = "smtp.mail.ru"
+    mail_port: int = 465
+    mail_username: str = ""
+    mail_password: str = ""
+    mail_encryption: str = ""
+    mail_from_address: str = ""
 
     class Config:
         env_file = ".env"

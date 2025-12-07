@@ -9,7 +9,6 @@ from app.Services.RequestParser import RequestParser
 from email_validator import validate_email, EmailNotValidError
 from app.Services.CsrfService import CsrfService
 from app.Services.EmailService import EmailService
-import hashlib
 import re
 from datetime import datetime
 from app.Services.AuthService import AuthService
