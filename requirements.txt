@@ -1,45 +1,14 @@
-# Основные зависимости
-
-# Alembic - инструмент для миграций базы данных в SQLAlchemy
 alembic==1.13.1
-
-# Uvicorn - ASGI-сервер для запуска FastAPI приложений
 uvicorn==0.27.0
-
-# FastAPI - современный, быстрый веб-фреймворк для построения API
 fastapi==0.109.1
-
-# itsdangerous - библиотека для создания криптографически подписанных данных (используется в сессиях, токенах)
 itsdangerous==2.2.0
-
-# SQLAlchemy - мощный ORM и инструментарий для работы с базами данных
 sqlalchemy==2.0.25
-
-# python-dotenv - загрузка переменных окружения из .env файлов
 python-dotenv==1.2.1
-
-# PyMySQL - MySQL клиент для Python
 pymysql==1.1.2
-
-# Jinja2 - движок шаблонов для Python
 jinja2==3.1.2
-
-
-# Валидация
-
-# email-validator - библиотека для проверки email-адресов
 email-validator==2.0.0.post2
-
-# Passlib - библиотека для хеширования паролей (с поддержкой bcrypt)
-passlib[bcrypt]==1.7.4
-
-# Pydantic Settings - расширение Pydantic для работы с настройками приложения
+bcrypt==3.2.0
 pydantic-settings==2.2.1
 
 
-#cd "C:\Users\pro90\OneDrive\Документы\NetBeansProjects\TitanCoreFramework"
 
-# python -m venv venv
-# "venv\Scripts\activate"
-# pip install -r requirements.txt
-# python -m uvicorn app.main:app --reload

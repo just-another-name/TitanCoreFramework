@@ -38,12 +38,12 @@ def seed():
             db.add(password_history)
             db.commit()
             
-            print(f"✅ Пользователь {email} создан и пароль сохранен в историю")
+            print(f"[Success] Пользователь {email} создан и пароль сохранен в историю")
         else:
-            print(f"ℹ️ Пользователь {email} уже существует")
+            print(f"[Warning]️ Пользователь {email} уже существует")
 
     except Exception as e:
-        print(f"❌ Ошибка при вставке пользователя: {e}")
+        print(f"[ERROR] Ошибка при вставке пользователя: {e}")
         db.rollback()
     finally:
         db.close()

@@ -33,6 +33,9 @@ yarn-error.log*
 *.swp
 *.swo
 
+#
+GIT.md
+
 # OS
 .DS_Store
 .DS_Store?
