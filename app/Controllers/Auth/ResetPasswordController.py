@@ -77,6 +77,16 @@ class ResetPasswordController():
                     status_code=400
                 )
             
+            user = db.query(User).filter_by(
+                email=email
+            ).first()
+            
+            if not user:
+                return JSONResponse(
+                    {"error": "Не удалось найти пользователя с указанным E-mail.", "csrf": CsrfService.set_token_to_session(request)},
+                    status_code=401
+                )
+            
             password_pattern = re.compile(r"((?=^.{7,}$)(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9]*)")
             if not password_pattern.fullmatch(password):
                 return JSONResponse(
@@ -91,15 +101,6 @@ class ResetPasswordController():
                     status_code=400
                 )
             
-            user = db.query(User).filter_by(
-                email=email
-            ).first()
-            
-            if not user:
-                return JSONResponse(
-                    {"error": "Не удалось найти пользователя с указанным E-mail.", "csrf": CsrfService.set_token_to_session(request)},
-                    status_code=401
-                )
             password_hash = AuthService.get_password_hash(password)
             
             old_password = db.query(UsersPasswordHistory).filter(
@@ -113,32 +114,30 @@ class ResetPasswordController():
                     status_code=400
                 )
             
-            if user:
-                
-                db.query(UsersPasswordResetToken).filter(
-                    UsersPasswordResetToken.email == email
-                ).delete()
+            db.query(UsersPasswordResetToken).filter(
+                UsersPasswordResetToken.email == email
+            ).delete()
 
-                db.query(User).filter(
-                    User.email == email
-                ).update(
-                    {"password": password_hash}
-                )
-                
-                password_history = UsersPasswordHistory(
-                    user_id=user.id,
-                    password=password_hash,
-                    created_at=datetime.utcnow(),
-                    updated_at=datetime.utcnow()
-                )
-                db.add(password_history)
-                
-                db.commit()
-                
-                return JSONResponse(
-                        {"result": 1},
-                        status_code=200
-                )  
+            db.query(User).filter(
+                User.email == email
+            ).update(
+                {"password": password_hash}
+            )
+            
+            password_history = UsersPasswordHistory(
+                user_id=user.id,
+                password=password_hash,
+                created_at=datetime.utcnow(),
+                updated_at=datetime.utcnow()
+            )
+            db.add(password_history)
+            
+            db.commit()
+            
+            return JSONResponse(
+                {"result": 1},
+                status_code=200
+            )  
 
                         
         except Exception as e:
