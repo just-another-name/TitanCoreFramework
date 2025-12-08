@@ -71,19 +71,32 @@ class ForgotPasswordController():
                 mail_token_hash = hashlib.sha256(mail_token.encode()).hexdigest()
                 email_sent = EmailService.send_password_reset_email(email, mail_token)
                 
-                db.query(UsersPasswordResetToken).filter(
-                    UsersPasswordResetToken.email == email
-                ).delete()
-                
-                reset_token = UsersPasswordResetToken(
-                    email=email,
-                    token=mail_token_hash
-                )
-                
-                db.add(reset_token)
-                db.commit()
+                # Если email успешно отправлен, сохраняем токен в БД
+                if email_sent:
+                    try:
+                        db.query(UsersPasswordResetToken).filter(
+                            UsersPasswordResetToken.email == email
+                        ).delete()
+                        
+                        reset_token = UsersPasswordResetToken(
+                            email=email,
+                            token=mail_token_hash
+                        )
+                        
+                        db.add(reset_token)
+                        db.commit()
+                    except Exception as e:
+                        db.rollback()
+                        logger.error(f"Failed to save password reset token for {email}: {e}", exc_info=True)
+                        # Логируем ошибку, но все равно возвращаем успех для защиты от перечисления
+                else:
+                    # Email не отправлен - логируем критическую ошибку для администратора
+                    logger.error(f"CRITICAL: Failed to send password reset email to {email}. Token was NOT saved.", exc_info=True)
+                    # Не сохраняем токен, так как email не был отправлен
+                    # Все равно возвращаем успех для защиты от перечисления пользователей
             
             # Всегда возвращаем одинаковый ответ для защиты от перечисления пользователей
+            # (даже если email не был отправлен - это логируется для администратора)
             return JSONResponse(
                 {"result": 1},
                 status_code=200
