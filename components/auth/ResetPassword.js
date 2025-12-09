@@ -92,8 +92,8 @@ function ResetPassword({ csrfToken, setCsrfToken }) {
                                 className="form-control" 
                                 name="email" 
                                 type="email"
-                                minLength="8" 
-                                maxLength="30" 
+                                minLength="6" 
+                                maxLength="254" 
                                 title="Пожалуйста, введите корректный email (например: example@domain.com)"
                                 required
                                 value={email}
@@ -102,16 +102,16 @@ function ResetPassword({ csrfToken, setCsrfToken }) {
                             />
                         </div>
                          <div className="form-group form-animation">
-                            <label className="auth_label" htmlFor="password">Придумайте пароль не менее 8 знаков</label>
+                            <label className="auth_label" htmlFor="password">Придумайте пароль (10-72 символов)</label>
                             <input 
                                 id="password" 
-                                title="Пароль должен состоять из цифр, латинских маленьких и заглавных букв, не менее 8 символов"
+                                title="Пароль: 10-72 символов, минимум 1 заглавная, 1 строчная, 1 цифра, 1 спецсимвол"
                                 className="form-control" 
                                 placeholder="" 
                                 name="password" 
-                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$"
-                                minLength="8" 
-                                maxLength="30" 
+                                pattern="(?=^.{10,72}$)(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[^\\w\\s]).*)" 
+                                minLength="10" 
+                                maxLength="72" 
                                 type="password" 
                                 required
                                 value={password}
@@ -123,13 +123,13 @@ function ResetPassword({ csrfToken, setCsrfToken }) {
                             <label className="auth_label" htmlFor="repeat_password">Повторите пароль</label>
                             <input 
                                 id="repeat_password" 
-                                title="Пароль должен состоять из цифр, латинских маленьких и заглавных букв, не менее 8 символов"
+                                title="Пароль: 10-72 символов, минимум 1 заглавная, 1 строчная, 1 цифра, 1 спецсимвол"
                                 className="form-control" 
                                 placeholder="" 
                                 name="repeat_password" 
-                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,30}$"
-                                minLength="8" 
-                                maxLength="30" 
+                                pattern="(?=^.{10,72}$)(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[^\\w\\s]).*)" 
+                                minLength="10" 
+                                maxLength="72" 
                                 type="password" 
                                 required
                                 value={repeatPassword}

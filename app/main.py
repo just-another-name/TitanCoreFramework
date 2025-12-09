@@ -1,6 +1,7 @@
 # app/main.py
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware 
 import logging.config
 import sys
@@ -13,6 +14,7 @@ sys.path.append(str(Path(__file__).parent.parent))
 from config import route
 from config.app import settings
 from config.logging import LOGGING
+from config.security import cors_options, SESSION_COOKIE_SAMESITE
 
 session_secret = os.getenv("SESSION_SECRET_KEY")
 if not session_secret or len(session_secret) < 32:
@@ -30,8 +32,14 @@ app.add_middleware(
     secret_key = session_secret,
     session_cookie="session",      
     max_age=60 * 60 * 24 * 7,
-    same_site="lax",
+    same_site=SESSION_COOKIE_SAMESITE,
     https_only=https_only
+)
+
+# CORS (конфигурируется через переменные окружения)
+app.add_middleware(
+    CORSMiddleware,
+    **cors_options()
 )
 
 app.include_router(route.router)

@@ -79,8 +79,8 @@ function Login({ csrfToken, setCsrfToken }) {  // Добавляем setCsrfToke
                                 name="login" 
                                 type="email"
                                 pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-                                minLength="8" 
-                                maxLength="30" 
+                                minLength="6" 
+                                maxLength="254" 
                                 title="Пожалуйста, введите корректный email (например: example@domain.com)"
                                 required
                                 value={email}
@@ -91,12 +91,12 @@ function Login({ csrfToken, setCsrfToken }) {  // Добавляем setCsrfToke
                             <label className="auth_label" htmlFor="i_password">Пароль</label>
                             <input 
                                 id="i_password" 
-                                title="Пароль должен состоять из цифр, латинских маленьких и заглавных букв, не менее 8 символов"
+                                title="Пароль: 10-72 символов, минимум 1 заглавная, 1 строчная, 1 цифра, 1 спецсимвол"
                                 className="form-control"  
                                 name="password" 
-                                pattern="((?=^.{7,}$)(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])[a-zA-Z0-9]*)" 
-                                minLength="8" 
-                                maxLength="30" 
+                                pattern="(?=^.{10,72}$)(?=.*[A-Z])(?=.*[0-9])(?=.*[a-z])(?=.*[^\\w\\s]).*)" 
+                                minLength="10" 
+                                maxLength="72" 
                                 type="password" 
                                 required
                                 value={password}

@@ -1,12 +1,12 @@
 var path = require('path');
 
 module.exports = {
-  mode: 'development', // Режим разработки
-  // mode: 'production',
-  entry: './components/test/app.js', // Точка входа
+ //  mode: 'development', // Режим разработки
+  mode: 'production',
+  entry: './components/auth/app.js', // Точка входа
   output: {
     path: path.resolve(__dirname, './static/dist'),
-    filename: 'test.js'
+    filename: 'auth.js'
   },
   module: {
     rules: [

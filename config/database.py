@@ -4,15 +4,30 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 from dotenv import load_dotenv
+from config.app import settings
 import os
 
 load_dotenv()
 
-def _require_env(name: str) -> str:
-    value = os.getenv(name)
-    if not value:
-        raise RuntimeError(f"Environment variable {name} must be set")
-    return value
+
+def _require_env(name: str, *aliases: str) -> str:
+    """
+    Получаем переменную окружения в порядке: основное имя -> алиасы -> settings.
+    Поддерживает нижний и верхний регистр, чтобы не падать при несовпадении.
+    """
+    candidates = (name, *aliases, name.upper())
+    for key in candidates:
+        value = os.getenv(key)
+        if value:
+            return value
+
+    # Фолбэк к Pydantic Settings (если задано)
+    settings_value = getattr(settings, name, None)
+    if settings_value:
+        return str(settings_value)
+
+    raise RuntimeError(f"Environment variable {name} must be set")
+
 
 database_user = _require_env("database_user")
 database_password = _require_env("database_password")
@@ -29,6 +44,7 @@ engine = create_engine(DATABASE_URL, pool_pre_ping=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = declarative_base()
+
 
 def get_db():
     db = SessionLocal()

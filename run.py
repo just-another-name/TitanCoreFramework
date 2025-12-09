@@ -7,7 +7,7 @@ if __name__ == "__main__":
     import uvicorn
     
     # Парсим URL из appBaseUrl
-    parsed_url = urlparse(settings.appBaseUrl)
+    parsed_url = urlparse(settings.app_base_url)
     host = parsed_url.hostname or "127.0.0.1"
     port = parsed_url.port or 8000
     
