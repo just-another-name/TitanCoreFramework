@@ -1,5 +1,5 @@
 alembic==1.13.1
-uvicorn==0.27.0
+uvicorn==0.38.0
 fastapi==0.109.1
 itsdangerous==2.2.0
 sqlalchemy==2.0.25
@@ -8,7 +8,7 @@ pymysql==1.1.2
 jinja2==3.1.2
 aiohttp-jinja2==1.5.1
 email-validator==2.0.0.post2
-bcrypt==3.2.0
+bcrypt==4.3.0
 passlib[bcrypt]==1.7.4
 pydantic-settings==2.2.1
 
